@@ -7,17 +7,35 @@ $(document).ready(() => {
     fetch(url).then(res => res.json()).then((data) => {
       var results = data.query.search
       console.log(results)
-      results.map((element, key) => {
-        $('.results').append(`
-            <a href="http://en.wikipedia.org/?curid=${element.pageid}">
-            <div class="result">
-              <h3 className="result-number">${key + 1}</h3>
-              <h1 class="result-title">${element.title}</h1>
-              <p class="result-snippet">${element.snippet}</p>
-            </div>
-            </a>
-          `)
+
+      $('.form').css({
+        "-webkit-animation": "search-up .5s linear forwards",
+                "animation": "search-up .5s linear forwards"
       })
+
+      $('.container').append(`
+        <div class="results"></div>
+      `)
+
+      setTimeout(function(){
+        results.map((element, key) => {
+
+          $('.results').append(`
+              <a href="http://en.wikipedia.org/?curid=${element.pageid}" target="_blank">
+              <div class="result">
+                <div class="result-key">
+                  <h3 class="result-key-number">${key + 1}</h3>
+                </div>
+                <div class="result-info">
+                  <h1 class="result-info-title">${element.title}</h1>
+                  <p class="result-info-snippet">${element.snippet}...</p>
+                </div>
+
+              </div>
+              </a>
+            `)
+        })
+      }, 600)
     }).catch((error) => console.log(error))
     return false
   })
